@@ -1,0 +1,70 @@
+YCOM VARIABLE NAME,VARIABLE DESCRIPTION
+(GeoType,Geographic level (US/State/Congressional district))
+
+Group,Democrat (1) or Republican (0) opinions
+
+GEOID,Geographic identifier
+
+(GeoName,Name of geographic area)
+
+TotalPop,Total population
+
+congress,Estimated percentage who think congress should be doing more/much more to address global warming
+
+congressOppose,Estimated percentage who think congress should be doing less/much less to address global warming
+
+corporations,Estimated percentage who think corporations and industry should be doing more/much more to address global warming
+
+corporationsOppose,Estimated percentage who think corporations and industry should be doing less/much less to address global warming
+
+citizens,Estimated percentage who think citizens themselves should be doing more/much more to address global warming
+
+citizensOppose,Estimated percentage who think citizens themselves should be doing less/much less to address global warming
+
+regulate,Estimated percentage who somewhat/strongly support regulating CO2 as a pollutant
+
+regulateOppose,Estimated percentage who somewhat/strongly oppose regulating CO2 as a pollutant
+
+supportRPS,Estimated percentage who somewhat/strongly support requiring utilities to produce 20% electricity from renewable sources
+
+supportRPSOppose,Estimated percentage who somewhat/strongly oppose requiring utilities to produce 20% electricity from renewable sources
+
+fundrenewables,Estimated percentage who somewhat/strongly support funding research into renewable energy sources
+
+fundrenewablesOppose,Estimated percentage who somewhat/strongly oppose funding research into renewable energy sources
+
+exp,Estimated percentage who somewhat/strongly agree that they have personally experienced the effects of global warming
+
+expOppose,Estimated percentage who somewhat/strongly disagree that they have personally experienced the effects of global warming
+
+prienv,"Estimated percentage who think protecting the environment is more important than economic growth, even if it reduces economic growth"
+
+prienvOppose,"Estimated percentage who think economic growth is more important than protecting the environment, even if it leads to environmental problems"
+
+teachGW,"Estimated percentage who somewhat/strongly agree that schools should teach about the causes, consequences, and potential solutions to global warming"
+
+teachGWOppose,"Estimated percentage who somewhat/strongly disagree that schools should teach about the causes, consequences, and potential solutions to global warming"
+
+happening,Estimated percentage who think that global warming is happening
+
+happeningOppose,Estimated percentage who do not think that global warming is happening
+
+human,Estimated percentage who think that global warming is caused mostly by human activities
+
+humanOppose,Estimated percentage who think that global warming is caused mostly by natural changes in the environment
+
+consensus,Estimated percentage who believe that most scientists think global warming is happening
+
+consensusOppose,Estimated percentage who believe there is a lot of disagreement among scientists about whether or not global warming is happening
+
+worried,Estimated percentage who are somewhat/very worried about global warming
+
+worriedOppose,Estimated percentage who are not very/not at all worried about global warming
+
+harmUS,Estimated percentage who think global warming will harm people in the US a moderate amount/a great deal
+
+harmUSOppose,Estimated percentage who think global warming will harm people in the US not at all/only a little
+
+affectweather,Estimated percentage who somewhat/strongly agree that global warming is affecting the weather in the United States
+
+affectweatherOppose,Estimated percentage who somewhat/strongly disagree that global warming is affecting the weather in the United States
