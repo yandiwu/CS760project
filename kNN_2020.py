@@ -27,6 +27,20 @@ Ystate = Y1[:51]
 Ydistrict = Y2[3193:]
 D = len(result)
 
+#import county data csv file as matrix
+reader2 = csv.reader(open("CoveringClimateNow_2020_County_Only.csv", "rt"), delimiter=",")
+next(reader2, None) #skip the first row
+r2 = list(reader2)
+Xcounty = np.array(r2).astype("float")
+
+#create X and Y, matrices of training data and labels on the county level
+Ycounty = np.delete(Xcounty, np.s_[1::], 1) #first column contains all the county labels
+Ycounty1 = deepcopy(Y)
+Xcounty = np.delete(Xcounty, 0, 1) #delete first column- not a feature (these are the labels)
+Ymargins = np.delete(Xcounty, np.s_[1::], 1) #second column contains all the margins
+Xcounty = np.delete(Xcounty, 0, 1) #delete second column- not feature (margins)
+D = len(Xcounty[0])
+
 #k nearest neighbors
 def nearest_neighbors(x, X, Y, k):
     """
@@ -84,79 +98,77 @@ def locally_weighted_regression(x, closest_distances, neighbor_labels):
     else:
         return 0
 
-#Wisconsin
-x = [74.203,25.5,76.332,22.162,76.451,22.249,76.501,22.227,76.465,21.852,74.521,23.666,77.678,21.309,73.087,25.435,76.163,23.083,74.63,24.332]
-y = [72.312, 27.188, 74.098, 24.617, 75.784, 23.212,75.494,	23.094,	75.522,	23.26,	72.948,	25.044,	76.1, 22.214, 72.179, 25.549, 73.924, 24.376, 72.597, 26.256]
-N1 = nearest_neighbors(x, Xstate, Ystate, 8)
-N2 = nearest_neighbors(y, Xstate, Ystate, 8)
-#print(locally_weighted_regression(x, N1[1], N1[2]))
-#print(locally_weighted_regression(x, N2[1], N2[2]))
-#z = [72.614, 26.464, 75.775, 22.087, 77.569, 21.098, 76.304, 22.015, 75.923, 22.259, 76.013, 22.6, 77.631, 20.586, 73.266, 25.529, 74.968, 23.63, 75.932, 22.731]
-#N3 = nearest_neighbors(z, Xdistrict, Ydistrict, 8)
-#print(N3)
-#print(locally_weighted_regression(x, N3[1], N3[2]))
-
 ##############################################################################
-########## FIVE FOLD CROSS VALIDATION #########################################
+########## N-FOLD CROSS VALIDATION #########################################
 ##############################################################################
 
-def five_fold_cross_validation(X, Y):
+def cross_validation(X, Y, n):
     """
     X, the np array with all the training data
     Y, the labels of the training data
+    n, either 5 or 10 depending on the number of groups we need the split the data into
     """
     accuracy = 0
-    for i in range(5):
+    k = round(math.sqrt(len(X)))
+    for i in range(n):
         Xtrain = deepcopy(X)
         ytrain = deepcopy(Y)
         Xtest = deepcopy(X)
         ytest = deepcopy(Y)
-        r = math.floor(len(X)/5)
-        d = len(X)%5 #last set will be a bit bigger
-        if i != 4:
+        r = math.floor(len(X)/n)
+        d = len(X)%n #last set will be a bit bigger
+        if i != n - 1:
             Xtest = Xtest[i*r : (i + 1)*r] #training data
             ytest = ytest[i*r : (i + 1)*r] #testing data
         #account for the fact that there are 51 states
         else:
-            Xtest = Xtest[i*r : 5*r+d]
-            ytest = ytest[i*r : 5*r+d]
+            Xtest = Xtest[i*r : n*r+d]
+            ytest = ytest[i*r : n*r+d]
         #delete the testing data from the training data
         j = 0
         while j < r:
             Xtrain = np.delete(Xtrain, i*r, 0)
             ytrain = np.delete(ytrain, i*r, 0)
             j += 1
-        if i == 4:
+        if i == n - 1:
             if d != 0:
-                Xtrain = np.delete(Xtrain, 4*r, 0)
-                ytrain = np.delete(ytrain, 4*r, 0)
+                Xtrain = np.delete(Xtrain, (n - 1)*r, 0)
+                ytrain = np.delete(ytrain, (n - 1)*r, 0)
         accuracy_count = 0
         for l in range(len(Xtest)): #counting the number of accurately predicted cases
             yhatlist = []
-            yhat = kNN_accuracy(Xtest[l], Xtrain, ytrain)
+            yhat = kNN_accuracy(Xtest[l], Xtrain, ytrain, k)
             if yhat == ytest[l]:
                 accuracy_count += 1
         accuracy += accuracy_count/(len(Xtest))
-    return accuracy/5
+    return accuracy/n
 
-def kNN_accuracy(x, Xtrain, Ytrain):
+def kNN_accuracy(x, Xtrain, Ytrain, k):
     """
     Helper function for calculating the prediction
     x, a feature vector to predict the election results of
     Xtrain, an np array of the training data
     Ytrain, an np array of the training labels
+    k, the number of nearest neighbors to find
     """
-    k = round(math.sqrt(len(Xtrain)*(1.25))) #calculate the number of nearest neighbors
     data = nearest_neighbors(x, Xtrain, Ytrain, k)
     return locally_weighted_regression(x, data[1], data[2])
 
 #perform 5-fold cross validation on state data
-print(five_fold_cross_validation(Xstate, Ystate))
+print(cross_validation(Xstate, Ystate, 5))
 
-#randomly shuffle the congressional data to make it more balanced
-z = list(zip(Xdistrict, Ydistrict))
-random.shuffle(z)
-Xdistrict, Ydistrict = zip(*z)
+accuracy = 0
+for _ in range(10):
+    #randomly shuffle the congressional data to make it more balanced
+    z = list(zip(Xdistrict, Ydistrict))
+    random.shuffle(z)
+    Xdistrict, Ydistrict = zip(*z)
+    #perform 5-fold cross validation on district data
+    accuracy += cross_validation(Xdistrict, Ydistrict, 5)
+print(accuracy/10)
 
-#perform 5-fold cross validation on district data
-print(five_fold_cross_validation(Xdistrict, Ydistrict))
+#perform 10-fold cross validation on county data
+z1 = list(zip(Xcounty, Ycounty))
+random.shuffle(z1)
+Xcounty, Ycounty = zip(*z1)
+print(cross_validation(Xcounty, Ycounty, 10))
