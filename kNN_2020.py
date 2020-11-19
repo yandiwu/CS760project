@@ -157,6 +157,7 @@ def kNN_accuracy(x, Xtrain, Ytrain, k):
 #perform 5-fold cross validation on state data
 print(cross_validation(Xstate, Ystate, 5))
 
+#average accuracies of 10 runs of 5-fold cross validation at the electoral district level 
 accuracy = 0
 for _ in range(10):
     #randomly shuffle the congressional data to make it more balanced
