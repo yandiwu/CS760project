@@ -145,7 +145,7 @@ def cross_validation(X, Y, n):
 
 def kNN_accuracy(x, Xtrain, Ytrain, k):
     """
-    Helper function for calculating the prediction
+    Helper function for calculating the prediction the prediction for N-fold cross validation. 
     x, a feature vector to predict the election results of
     Xtrain, an np array of the training data
     Ytrain, an np array of the training labels
@@ -157,7 +157,7 @@ def kNN_accuracy(x, Xtrain, Ytrain, k):
 #perform 5-fold cross validation on state data
 print(cross_validation(Xstate, Ystate, 5))
 
-#average accuracies of 10 runs of 5-fold cross validation at the electoral district level 
+#average accuracies of 10 runs of 5-fold cross validation at the electoral district level
 accuracy = 0
 for _ in range(10):
     #randomly shuffle the congressional data to make it more balanced
