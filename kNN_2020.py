@@ -2,6 +2,7 @@ import csv
 import numpy as np
 import math
 import random
+import statistics
 from copy import deepcopy
 
 #import csv file as matrix
@@ -90,12 +91,12 @@ def locally_weighted_regression(x, closest_distances, neighbor_labels):
     num = 0
     k = len(closest_distances) #number of nearest neighbors
     for i in range(1, k):
-        w = 1/(closest_distances[i])
+        w = 1/(closest_distances[i]) #calculate the weight of the nearest neighbor
         denom += w
-        num += w * neighbor_labels[i]
-    if num/denom > 0.5:
+        num += w * neighbor_labels[i] #multiply label of nearest neighbor by the weight
+    if num/denom > 0.5: #if result is greater than 0.5, predict Democrat
         return 1
-    else:
+    else: #otherwise predict Republican
         return 0
 
 ##############################################################################
@@ -145,7 +146,7 @@ def cross_validation(X, Y, n):
 
 def kNN_accuracy(x, Xtrain, Ytrain, k):
     """
-    Helper function for calculating the prediction the prediction for N-fold cross validation. 
+    Helper function for calculating the prediction the prediction for N-fold cross validation.
     x, a feature vector to predict the election results of
     Xtrain, an np array of the training data
     Ytrain, an np array of the training labels
@@ -153,6 +154,77 @@ def kNN_accuracy(x, Xtrain, Ytrain, k):
     """
     data = nearest_neighbors(x, Xtrain, Ytrain, k)
     return locally_weighted_regression(x, data[1], data[2])
+
+
+##############################################################
+############## LOCAL LINEAR REGRESSION #######################
+##############################################################
+
+def loc_lin_reg(x, Xk, yk):
+    """
+    Calculates yhat using linear regression
+
+    Args:
+    x, feature vector whose outcome we are trying to predict
+    Xk, an np array, the feature matrix of training data
+    yk, the labels associated to the training data
+
+    Returns:
+    yhat, a float value
+    """
+    U = np.linalg.inv(np.matmul(np.transpose(Xk), Xk))
+    Z = np.matmul(np.matmul(U, np.transpose(Xk)), yk)
+    return np.matmul(x, Z)
+
+def margin_accuracy(X, Y):
+    """
+    Gives statistics on the margins of victory.
+
+    Args:
+
+    Returns:
+    avgerror, a float, average error in margin of victory across all the counties (calculated using the absolute value of the difference between the actual margin of victory and the predicted margin of victory)
+    minerror, the error of the best prediction
+    maxerror, the error of the worst prediction
+    minindex, the index of the best prediction
+    maxindex, the index of the worst prediction
+    reperror, the average prediction error for Republican counties
+    demerror, the average prediction error for Democratic counties
+    """
+    accuracy = []
+    a = 0
+    dems = 0
+    demcount = 0
+    reps = 0
+    repcount = 0
+    L = len(X)
+    for i in range(L):
+        #find nearest neighbors of a particular row
+        NN = nearest_neighbors(X[i], Xcounty, Ymargins, 56)
+        np.delete(NN[0], 0, 0) #forget the first nearest neighbor, which is the same as the feature vector
+        np.delete(NN[2], 0, 0) #forget the label as well
+        yhat = loc_lin_reg(X[i], NN[0], NN[2])
+        d = abs(yhat - Y[i]) #calculate the error in accuracy
+        if Y[i] == 0:
+            reps += d #tabulate errors in Republican counties
+            repcount += 1 #count number of Republican counties
+        else:
+            dems += d #tabulate errors in Democratic counties
+            demcount += 1 #count the number of Democratic counties
+        accuracy += [d]
+        a += d
+    avgerror = a/L #calculate the average error in prediction
+    minerror = min(accuracy) #calculate the minimum error
+    maxerror = max(accuracy) #calculate the maximum error
+    minindex = accuracy.index(min(accuracy)) #gives index of the minimum error
+    maxindex = accuracy.index(max(accuracy)) #gives index of the maximum error
+    reperror = reps/repcount #average error for Republican counties
+    demerror = dems/demcount #average error for Democratic counties
+    return (avgerror, minerror, maxerror, minindex, maxindex, reperror, demerror)
+
+###########################################################
+################ CODE TO RUN ##############################
+###########################################################
 
 #perform 5-fold cross validation on state data
 print(cross_validation(Xstate, Ystate, 5))
@@ -171,5 +243,8 @@ print(accuracy/10)
 #perform 10-fold cross validation on county data
 z1 = list(zip(Xcounty, Ycounty))
 random.shuffle(z1)
-Xcounty, Ycounty = zip(*z1)
-print(cross_validation(Xcounty, Ycounty, 10))
+Xcounty1, Ycounty1 = zip(*z1)
+print(cross_validation(Xcounty1, Ycounty1, 10))
+
+#data for local linear regression on margin of victory
+print(margin_accuracy(Xcounty, Ycounty))
