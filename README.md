@@ -4,3 +4,11 @@ Mildenberger, M., Marlon, J.R., Howe, P.D., & Leiserowitz, A. (2017) “The spat
 
 County data: 
 https://github.com/favstats/USElection2020-NYT-Results/tree/master/data/2020-11-07%2014-15-14?fbclid=IwAR0fo2FIUvczObmzUaNmnwNOnnuuCnnqfqxejy1dFlQP5sNmnd1ppcI0rKE
+
+# Description of Files
+kNN_2020.py: Python code for the distance weighted k-Nearest Neighbors predictor, along with the local linear regression prediction for the margins of victory.
+
+# Final Results Used for Analysis
+States (Presidential): https://www.math.wisc.edu/~jenny/States/
+Congressional Districts (House): https://www.math.wisc.edu/~jenny/CD
+Counties (Presidential): https://www.math.wisc.edu/~jenny/County 
