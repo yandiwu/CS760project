@@ -5,7 +5,7 @@ from scipy.stats import norm
 #Given a list of dicts of attributes and a new samples X,
 #this method computes Prod Prob(x_j | y)
 #For now, our attributes uses gaussian
-#newX is an np array of size (n,6)
+#newX is an np array of size (n,k)
 #This method returns an np array of size (n,)
 def naiveProb(listOfAttributes,newX):
     probs = np.zeros(newX.shape)
@@ -42,7 +42,7 @@ def naiveBayesPredictor(data,newX):
     demNaiveBayes = demProb * naiveProb(demList,toPredict.to_numpy())
     repNaiveBayes = repProb * naiveProb(repList,toPredict.to_numpy())
 
-    #Given the dead and survival "naive probabilities", we make predictions
+    #Given the dem and rep "naive probabilities", we make predictions
     return ((demNaiveBayes-repNaiveBayes) >= 0).astype(int)
 
 #data is a pandas dataframe, so this needs to be a little different
