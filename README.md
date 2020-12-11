@@ -6,9 +6,9 @@ County data:
 https://github.com/favstats/USElection2020-NYT-Results/tree/master/data/2020-11-07%2014-15-14?fbclid=IwAR0fo2FIUvczObmzUaNmnwNOnnuuCnnqfqxejy1dFlQP5sNmnd1ppcI0rKE
 
 # Description of Files
-kNN_2020.py: Python code for the distance weighted k-Nearest Neighbors predictor, along with the local linear regression prediction for the margins of victory.
+kNN_2020.py: Python code for the distance weighted k-Nearest Neighbors predictor, along with the local linear regression prediction for the margins of victory. <br />
 
 # Final Results Used for Analysis
-States (Presidential): https://www.math.wisc.edu/~jenny/States/
-Congressional Districts (House): https://www.math.wisc.edu/~jenny/CD
+States (Presidential): https://www.math.wisc.edu/~jenny/States/ <br />
+Congressional Districts (House): https://www.math.wisc.edu/~jenny/CD <br />
 Counties (Presidential): https://www.math.wisc.edu/~jenny/County 
