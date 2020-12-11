@@ -6,7 +6,14 @@ County data:
 https://github.com/favstats/USElection2020-NYT-Results/tree/master/data/2020-11-07%2014-15-14?fbclid=IwAR0fo2FIUvczObmzUaNmnwNOnnuuCnnqfqxejy1dFlQP5sNmnd1ppcI0rKE
 
 # Description of Files
+1. KNN<br />
 kNN_2020.py: Python code for the distance weighted k-Nearest Neighbors predictor, along with the local linear regression prediction for the margins of victory. <br />
+2. Decision Trees <br />
+DataParser.java: Java code for processing data to construct decision trees.<br />
+DecTree.java: Java code for building decision trees and performing n-fold cross-validation. <br />
+DecTreeNode.java: Java code to represent a single node in a tree. <br />
+Project.java: Java code to run various methods in DecTree.java. <br />
+3. Naive Bayes <br />
 
 # Final Results Used for Analysis
 States (Presidential): https://www.math.wisc.edu/~jenny/States/ <br />
