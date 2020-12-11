@@ -18,7 +18,7 @@ NaiveBayes2019.py: Python code using the naive bayes classifier to predict party
 NaiveBayes2020.py: Python code using the naive bayes classifier to make predictions for the 2020 US election.
 
 
-# Final Results Used for Analysis
+# Final Results Used for Analysis using Boxer (https://graphics.cs.wisc.edu/Vis/Boxer/)
 States (Presidential): https://www.math.wisc.edu/~jenny/States/ <br />
 Congressional Districts (House): https://www.math.wisc.edu/~jenny/CD <br />
 Counties (Presidential): https://www.math.wisc.edu/~jenny/County 
