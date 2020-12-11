@@ -14,6 +14,8 @@ DecTree.java: Java code for building decision trees and performing n-fold cross-
 DecTreeNode.java: Java code to represent a single node in a tree. <br />
 Project.java: Java code to run various methods in DecTree.java. <br />
 3. Naive Bayes <br />
+NaiveBayes2019.py: Python code using the naive bayes classifier to predict party affiliation for the 2019 data
+
 
 # Final Results Used for Analysis
 States (Presidential): https://www.math.wisc.edu/~jenny/States/ <br />
