@@ -23,3 +23,5 @@ Boxer (Interactive Comparison of Classification Results): https://graphics.cs.wi
 States (Presidential): https://www.math.wisc.edu/~jenny/States/ <br />
 Congressional Districts (House): https://www.math.wisc.edu/~jenny/CD <br />
 Counties (Presidential): https://www.math.wisc.edu/~jenny/County 
+
+# Final Write up is now available as a file, see " Final_Writeup.pdf "
